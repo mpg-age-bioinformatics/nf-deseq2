@@ -42,7 +42,7 @@ process annotate {
         df=pd.merge(id_name,df,left_on=["ensembl_gene_id"],right_index=True, how="right") # change to gene_id
         df=pd.merge(df,bio_go,on=["ensembl_gene_id"],how="left")
         df=df.sort_values(by=["padj"],ascending=True)
-        df.to_csv("/workdir/deseq2_output/annotated/"+f, sep="\t",index=None)
+        df.to_csv("/workdir/deseq2_output/annotated/"+f, sep="\\t",index=None)
         df.to_excel("/workdir/deseq2_output/annotated/"+f.replace('.tsv', '.xlsx'), index=None)
         n=f.split(".results.tsv")[0]
         s.append([i,n])
@@ -56,10 +56,10 @@ process annotate {
     for k in list(dfs.keys()):
         dfs[k].to_excel(EXC, str(k),index=None)
     EXC.close()
-    mt=pd.read_csv("/workdir/deseq2_output/all_results_stats.tsv", sep="\t")
+    mt=pd.read_csv("/workdir/deseq2_output/all_results_stats.tsv", sep="\\t")
     mt_ann=pd.merge(id_name,mt,on=["ensembl_gene_id"], how="right")
     mt_ann=pd.merge(mt_ann,bio_go,on=["ensembl_gene_id"],how="left")
-    mt_ann.to_csv("/workdir/deseq2_output/annotated/masterTable_annotated.tsv", sep="\t",index=None)
+    mt_ann.to_csv("/workdir/deseq2_output/annotated/masterTable_annotated.tsv", sep="\\t",index=None)
     mt_ann.to_excel("/workdir/deseq2_output/annotated/masterTable_annotated.xlsx", index=None)
   """
 }
