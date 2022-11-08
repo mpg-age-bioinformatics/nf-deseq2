@@ -11,8 +11,8 @@ process cellplot {
     val category
     val nterms
 
-  // when:
-  //   ( ! file("${params.project_folder}/deseq2_output/annotated/${inFile}".replace(".results.tsv",".topGO.tsv")).exists() ) 
+  when:
+    ( ! file("${params.project_folder}/deseq2_output/annotated/${inFile}".replace(".tsv",".${category}.cellplot.pdf")).exists() ) 
   
   script:
   """
