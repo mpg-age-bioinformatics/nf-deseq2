@@ -2,6 +2,25 @@
 nextflow.enable.dsl=2
 
 process get_ip {
+  stageInMode 'symlink'
+  stageOutMode 'move'
+
+  input:
+    path cytoscape_host
+
+  output:
+    path cytoscape_host
+  
+  script:
+  """
+    #!/bin/bash
+    echo "waiting for cytoscape to be available"
+    while [[ ! -f /workdir/${cytoscape_host} ]] ; do 
+      sleep 3\$((RANDOM % 9))
+    done
+    mv /workdir/${cytoscape_host} /workdir/${cytoscape_host}_inuse 
+  """
+
 
 }
 
@@ -10,10 +29,13 @@ process string {
   stageOutMode 'move'
 
   input:
-    val cytoscape_host
-
+    path cytoscape_host
+  
+  output:
+    path cytoscape_host
+  
   when:
-    ( ! file("${params.project_folder}/deseq2_output/annotated/masterTable_annotated.xlsx").exists() ) 
+      ( ! file("${params.project_folder}/deseq2_output/annotated/cytoscape.completed.txt").exists() ) 
   
   script:
   """
@@ -31,13 +53,14 @@ process string {
     import matplotlib.pyplot as plt
     import tempfile
     ################# in values ################################
-    fin=sys.argv[1]
+    with open("/workdir/${cytoscape_host}_inuse" , "r") as hostfile:
+      host=hostfile.readlines()[0].split("\\n")[0]
     species="${params.species}"
-    host="${cytoscape_host}"
     biomarthost="${params.biomart_host}"
     ###########################################################
-    input_files=os.lisdir("/workdir/deseq2_output/annotated/")
-    input_files=[ os.path.join(["/workdir/deseq2_output/annotated/",s] for s in input_files if ".results.tsv" in s ]
+    input_files=os.listdir("/workdir/deseq2_output/annotated/")
+    input_files=[s for s in input_files if ".results.tsv" in s ]
+    input_files=[ os.path.join("/workdir/deseq2_output/annotated/",s) for s in input_files if ".results.tsv" in s ]
     for fin in input_files:
         python_output="/".join(fin.split("/")[:-1])
         target=fin.replace("results.tsv","cytoscape")
@@ -221,21 +244,34 @@ process string {
                 print("No "+local)
                 sys.stdout.flush()
         print(f"Done with cytoscape for {fin}.")
+    with open("/workdir/deseq2_output/annotated/cytoscape.completed.txt", "w") as f:
+      f.write("cytoscape completed")
   """
 }
 
 process release_ip {
+  stageInMode 'symlink'
+  stageOutMode 'move'
+
+  input:
+    path cytoscape_host
+  
+  script:
+  """
+    #!/bin/bash
+    mv /workdir/${cytoscape_host}_inuse /workdir/${cytoscape_host} 
+  """
 
 }
 
 workflow {
   if ( 'cytoscape_host' in params.keySet() ) {
     if ( "${params.cytoscape_host}" != "None" ) {
+        printf "${params.cytoscape_host} will be renamed to ${params.cytoscape_host}_inuse"
         get_ip("${params.cytoscape_host}")
-        string(get_ip.out.collect()) 
-        release_ip("${params.cytoscape_host}",string.out.collect()) 
+        string(get_ip.out.collect())
+        release_ip(string.out.collect()) 
     }
   }
-
 
 } 
