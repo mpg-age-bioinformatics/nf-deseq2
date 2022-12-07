@@ -195,7 +195,7 @@ process parse_submission {
   """
 }
 
-process tx2gene {
+process tx2gene_proc {
   stageInMode 'symlink'
   stageOutMode 'move'
 
@@ -1124,7 +1124,7 @@ workflow preprocess {
 
 
 workflow pairwise {
-  tx2gene()
+  tx2gene_proc()
   data = channel.fromPath( "${params.project_folder}/deseq2_output/*.input.tsv" )
   deseq2( data, tx2gene.out.collect() )
   mastertable( deseq2.out.collect() )
