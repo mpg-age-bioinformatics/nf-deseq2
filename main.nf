@@ -1182,6 +1182,7 @@ workflow rcistarget {
   if ( 'rcis_db' in params.keySet() ) {
     data = channel.fromPath( "${params.project_folder}/deseq2_output/annotated/*.results.tsv" )
     rcistarget_proc(data) 
+  }
 }
 
 workflow qc {
