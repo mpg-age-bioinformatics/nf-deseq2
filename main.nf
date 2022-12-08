@@ -20,9 +20,9 @@ process get_images {
             singularity pull rnaseq.python-3.8-1.sif docker://index.docker.io/mpgagebioinformatics/rnaseq.python:3.8-1
         fi
 
-        if [[ ! -f deseq2-1.38.0f ]] ;
+        if [[ ! -f deseq2-1.38.0.sif ]] ;
           then
-            singularity pull deseq2-1.38.0 docker://index.docker.io/mpgagebioinformatics/deseq2:1.38.0
+            singularity pull deseq2-1.38.0.sif docker://index.docker.io/mpgagebioinformatics/deseq2:1.38.0
         fi
 
         if [[ ! -f topgo-2.50.0.sif ]] ;
