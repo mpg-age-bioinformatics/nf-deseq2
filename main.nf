@@ -1126,7 +1126,7 @@ workflow preprocess {
 workflow pairwise {
   tx2gene_proc()
   data = channel.fromPath( "${params.project_folder}/deseq2_output/*.input.tsv" )
-  deseq2( data, tx2gene.out.collect() )
+  deseq2( data, tx2gene_proc.out.collect() )
   mastertable( deseq2.out.collect() )
 }
 
