@@ -1103,7 +1103,7 @@ process upload_paths {
 
     cd ${params.project_folder}/deseq2_output/annotated
 
-    for f in \$(ls *.results.xlsx) ; do echo "deseq2 $(readlink -f \${f})" >>  upload.txt ; done
+    for f in \$(ls *.results.xlsx) ; do echo "deseq2 \$(readlink -f \${f})" >>  upload.txt ; done
     echo "deseq2 \$(readlink -f significant.xlsx)" >>  upload.txt
     echo "deseq2 \$(readlink -f masterTable_annotated.xlsx)" >>  upload.txt
 
