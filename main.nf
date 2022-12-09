@@ -834,10 +834,10 @@ process get_ip {
   stageOutMode 'move'
 
   input:
-    path cytoscape_host
+    val cytoscape_host
 
   output:
-    path cytoscape_host
+    val cytoscape_host
 
   when:
     ( ! file("${params.project_folder}/deseq2_output/annotated/cytoscape.completed.txt").exists() )
@@ -860,10 +860,10 @@ process string {
   stageOutMode 'move'
 
   input:
-    path cytoscape_host
+    val cytoscape_host
   
   output:
-    path cytoscape_host
+    val cytoscape_host
   
   when:
       ( ! file("${params.project_folder}/deseq2_output/annotated/cytoscape.completed.txt").exists() ) 
@@ -1087,7 +1087,7 @@ process release_ip {
   stageOutMode 'move'
 
   input:
-    path cytoscape_host
+    val cytoscape_host
 
   when:
     file("${params.project_folder}/deseq2_output/annotated/cytoscape.completed.txt").exists()
