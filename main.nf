@@ -236,7 +236,7 @@ process deseq2 {
     val input_file
 
   when:
-    ( ! file("${params.project_folder}/deseq2_output/${input_file}".replace(".input.txt",".results.txt")).exists() ) 
+    ( ! file("${params.project_folder}/deseq2_output/${input_file}".replace(".input.tsv",".results.tsv")).exists() ) 
 
   script:
   """
