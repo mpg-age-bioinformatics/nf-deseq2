@@ -466,7 +466,7 @@ process david_proc {
   stageOutMode 'move'
 
   when:
-    ( ! file("${params.project_folder}/deseq2_output/annotated/david.completed.txt")).exists() ) 
+    ( ! file("${params.project_folder}/deseq2_output/annotated/david.completed.txt").exists() )
   
   script:
   """
