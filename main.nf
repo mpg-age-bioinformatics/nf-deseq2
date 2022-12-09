@@ -465,11 +465,8 @@ process david_proc {
   stageInMode 'symlink'
   stageOutMode 'move'
 
-  input:
-    val f
-
   when:
-    ( ! file("${params.project_folder}/deseq2_output/annotated/${f}".replace(".results.tsv",".DAVID.tsv")).exists() ) 
+    ( ! file("${params.project_folder}/deseq2_output/annotated/david.completed.txt")).exists() ) 
   
   script:
   """
@@ -516,6 +513,8 @@ process david_proc {
                 EXC.close()
         else:
             print ("No significant differentially expressed genes")
+    with open(deseq2+"david.completed.txt", "w") as fout:
+      fout.write("completed")
   """
 }
 
@@ -1188,8 +1187,8 @@ workflow annotate {
 } 
 
 workflow david {
-  data = channel.fromPath( "${params.project_folder}/deseq2_output/annotated/*.results.tsv" )
-  david_proc(data) 
+  // data = channel.fromPath( "${params.project_folder}/deseq2_output/annotated/*.results.tsv" )
+  david_proc() 
 }
 
 workflow topgo {
