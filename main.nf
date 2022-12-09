@@ -619,7 +619,7 @@ process topgo_proc {
                         'listTotals', 'listTotals_used', 'Annotated', 'popTotals', 'popTotals_used', 
                         'Expected',  'foldEnrichment', 'bonferroni', 'benjamini', 'afdr', "gn", "gfc")]
       
-      names(D_out) <- c('categoryName', 'termName', 'listHits', 'percent', 'ease', 'geneIds',
+      names(D_out) <- c('categoryName', 'termName', 'listHits', 'percent', 'classicFisher', 'geneIds',
                         'listTotals', 'listTotals_used', 'popHits', 'popTotals', 'popTotals_used',
                         'Expected', 'foldEnrichment', 'bonferroni', 'benjamini', 'afdr', 'genes name', 'log2fc')
       
@@ -693,6 +693,10 @@ process cellplot {
     D<-D[D["categoryName"] == category, ]
     if ( nrow(D) == 0 ) {
       quit(save="no")
+    }
+
+    if( "classicFisher" %in%  names(D) ){
+      D\$ease <- as.numeric(as.character(D\$classicFisher))
     }
 
     D\$ease <- as.numeric(as.character(D\$ease))
