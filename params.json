@@ -1,7 +1,6 @@
 
   {
     "project_folder":"/Users/jboucas/nf-kallisto-deseq2-test/",
-    "kallisto_raw_data":"/Users/jboucas/Desktop/test_ftp/",
     "genomes":"/Users/jboucas/Desktop/genomes/",
     "organism":"caenorhabditis_elegans" ,
     "release":"107",
