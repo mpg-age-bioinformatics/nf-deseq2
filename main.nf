@@ -1112,28 +1112,35 @@ process upload_paths {
 
     cd ${params.project_folder}/deseq2_output/annotated
 
-    for f in \$(ls *.results.xlsx) ; do echo "deseq2 \$(readlink -f \${f})" >>  upload.txt ; done
-    echo "deseq2 \$(readlink -f significant.xlsx)" >>  upload.txt
-    echo "deseq2 \$(readlink -f masterTable_annotated.xlsx)" >>  upload.txt
+    for f in \$(ls *.results.xlsx) ; do echo "deseq2 \$(readlink -f \${f})" >>  upload.txt_ ; done
+    echo "deseq2 \$(readlink -f significant.xlsx)" >>  upload.txt_
+    echo "deseq2 \$(readlink -f masterTable_annotated.xlsx)" >>  upload.txt_
 
     if [[ \$(ls  | grep cytoscape) ]] ; then
-      for f in \$(ls *.cytoscape.* ) ; do echo "cytoscape \$(readlink -f \${f})" >>  upload.txt ; done
+      for f in \$(ls *.cytoscape.* ) ; do echo "cytoscape \$(readlink -f \${f})" >>  upload.txt_ ; done
     fi
 
     if [[ \$(ls  | grep DAVID) ]] ; then
-      for f in \$(ls *.DAVID.* ) ; do echo "david \$(readlink -f \${f})" >>  upload.txt ; done
+      for f in \$(ls *.DAVID.* ) ; do echo "david \$(readlink -f \${f})" >>  upload.txt_ ; done
     fi
 
     if [[ \$(ls  | grep RcisTarget) ]] ; then
-      for f in \$(ls *.RcisTarget.* ) ; do echo "rcistarget \$(readlink -f \${f})" >>  upload.txt ; done
+      for f in \$(ls *.RcisTarget.* ) ; do echo "rcistarget \$(readlink -f \${f})" >>  upload.txt_ ; done
     fi
 
     if [[ \$(ls  | grep topGO) ]] ; then
-      for f in \$(ls *.topGO.* ) ; do echo "togo \$(readlink -f \${f})" >>  upload.txt ; done
+      for f in \$(ls *.topGO.* ) ; do echo "togo \$(readlink -f \${f})" >>  upload.txt_ ; done
     fi
 
+    uniq upload.txt_ upload.txt 
+    rm upload.txt_
+
     cd ${params.project_folder}/qc_plots
-    for f in \$(ls *.* | grep -v upload.txt) ; do echo "qc_plots \$(readlink -f \${f})" >>  upload.txt ; done
+    rm -rf upload.txt 
+    for f in \$(ls *.* | grep -v upload.txt) ; do echo "qc_plots \$(readlink -f \${f})" >>  upload.txt_ ; done
+
+    uniq upload.txt_ upload.txt 
+    rm upload.txt_
 
   """
 }
