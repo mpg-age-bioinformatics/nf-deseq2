@@ -846,6 +846,8 @@ process get_ip {
   """
     #!/bin/bash
     echo "waiting for cytoscape to be available"
+    echo "!! ${cytoscape_host}"
+    ls /workdir/
     while [[ ! -e /workdir/${cytoscape_host} ]] ; do 
       sleep 3\$((RANDOM % 9))
     done
