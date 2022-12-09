@@ -1089,7 +1089,7 @@ process release_ip {
     path cytoscape_host
 
   when:
-    ( file("${params.project_folder}/deseq2_output/annotated/cytoscape.completed.txt").exists() ) 
+    file("${params.project_folder}/deseq2_output/annotated/cytoscape.completed.txt").exists()
   
   script:
   """
