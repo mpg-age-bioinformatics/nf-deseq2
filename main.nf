@@ -1093,9 +1093,50 @@ process release_ip {
 
 }
 
+process upload_paths {
+  stageInMode 'symlink'
+  stageOutMode 'move'
+
+  script:
+  """
+    rm -rf upload.txt
+
+    cd ${params.project_folder}/deseq2_output/annotated
+
+    for f in \$(ls *.results.xlsx) ; do echo "deseq2 $(readlink -f \${f})" >>  upload.txt ; done
+    echo "deseq2 \$(readlink -f significant.xlsx)" >>  upload.txt
+    echo "deseq2 \$(readlink -f masterTable_annotated.xlsx)" >>  upload.txt
+
+    if [[ \$(ls  | grep cytoscape) ]] ; then
+      for f in \$(ls *.cytoscape.* ) ; do echo "cytoscape \$(readlink -f \${f})" >>  upload.txt ; done
+    fi
+
+    if [[ \$(ls  | grep DAVID) ]] ; then
+      for f in \$(ls *.DAVID.* ) ; do echo "david \$(readlink -f \${f})" >>  upload.txt ; done
+    fi
+
+    if [[ \$(ls  | grep RcisTarget) ]] ; then
+      for f in \$(ls *.RcisTarget.* ) ; do echo "rcistarget \$(readlink -f \${f})" >>  upload.txt ; done
+    fi
+
+    if [[ \$(ls  | grep topGO) ]] ; then
+      for f in \$(ls *.topGO.* ) ; do echo "togo \$(readlink -f \${f})" >>  upload.txt ; done
+    fi
+
+    cd ${params.project_folder}/qc_plots
+    for f in \$(ls *.* | grep -v upload.txt) ; do echo "qc_plots \$(readlink -f \${f})" >>  upload.txt ; done
+
+  """
+}
+
 workflow images {
   main:
     get_images()
+}
+
+workflow upload {
+  main:
+    upload_paths()
 }
 
 workflow preprocess {

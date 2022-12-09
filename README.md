@@ -16,6 +16,8 @@ nextflow run mpg-age-bioinformatics/nf-deseq2 -r ${RELEASE} -params-file params.
 nextflow run mpg-age-bioinformatics/nf-deseq2 -r ${RELEASE} -params-file params.json -entry string_cytoscape -profile ${PROFILE}
 ```
 
+___ 
+
 ## Contributing
 
 Make a commit, check the last tag, add a new one, push it and make a release:
@@ -26,3 +28,13 @@ git tag -e -a <tag> HEAD
 git push origin --tags
 gh release create <tag> 
 ```
+
+___ 
+
+## Material and Methods
+
+### Differential gene expression
+
+After normalization of read counts by making use of the standard median-ratio for estimation of size factors, pair-wise differential gene expression was performed using DESeq2/1.24.0 
+
+After removal of genes with less then 10 overall reads log2 fold changes were shrank using approximate posterior estimation for GLM coefficients.
