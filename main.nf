@@ -202,8 +202,8 @@ process tx2gene_proc {
   output:
     val "/workdir/deseq2_output/deseq2.part1.Rdata", emit: rdata
 
-  // when:
-  //   ( ! file("${params.project_folder}/deseq2_output/deseq2.part1.Rdata").exists() ) 
+  when:
+    ( ! file("${params.project_folder}/deseq2_output/deseq2.part1.Rdata").exists() ) 
 
   script:
   """
