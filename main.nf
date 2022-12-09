@@ -568,9 +568,9 @@ process topgo_proc {
         geneID2GO[[goterms[i, 'ensembl_gene_id']]] = c(goterms[i, 'go_id'])
       }
     }
-    GOTERM_categories = list('BP' = 'GOTERM_BP_FAT',
-                            'MF' = 'GOTERM_MF_FAT', 
-                            'CC' = 'GOTERM_CC_FAT')
+    GOTERM_categories = list('BP' = 'GOTERM_BP',
+                            'MF' = 'GOTERM_MF', 
+                            'CC' = 'GOTERM_CC')
     for(go_cat in names(GOTERM_categories)){
       ## ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
       sampleGOdata <- new("topGOdata",
@@ -1168,19 +1168,13 @@ workflow david_kegg {
 
 workflow topgo_bp {
   topGO = channel.fromPath( "${params.project_folder}/deseq2_output/annotated/*.topGO.tsv" )
-  cellplot(topGO,"tsv", "GOTERM_BP_FAT", "15") 
-}
-
-workflow topgo_kegg {
-  topGO = channel.fromPath( "${params.project_folder}/deseq2_output/annotated/*.topGO.tsv" )
-  cellplot(topGO,"tsv", "KEGG_PATHWAY", "15")
+  cellplot(topGO,"tsv", "GOTERM_BP", "15") 
 }
 
 workflow cellplots {
   david_bp()
   david_kegg()
   topgo_bp()
-  topgo_kegg()
 }
 
 workflow rcistarget {
