@@ -884,7 +884,7 @@ process string {
     import matplotlib.pyplot as plt
     import tempfile
     ################# in values ################################
-    with open("/workdir/${cytoscape_host}_inuse" , "r") as hostfile:
+    with open("${cytoscape_host}_inuse" , "r") as hostfile:
       host=hostfile.readlines()[0].split("\\n")[0]
     species="${params.species}"
     biomarthost="${params.biomart_host}"
@@ -1078,7 +1078,7 @@ process string {
     with open("/workdir/deseq2_output/annotated/cytoscape.completed.txt", "w") as f:
       f.write("cytoscape completed")
 
-    os.rename("/workdir/${cytoscape_host}_inuse","/workdir/${cytoscape_host}")
+    os.rename("${cytoscape_host}_inuse","${cytoscape_host}")
   """
 }
 
@@ -1095,7 +1095,7 @@ process release_ip {
   script:
   """
     #!/bin/bash
-    mv ${cytoscape_host}_inuse ${cytoscape_host} 
+    if [[ -f ${cytoscape_host}_inuse ]] ; then mv ${cytoscape_host}_inuse ${cytoscape_host} ; fi
   """
 
 }
