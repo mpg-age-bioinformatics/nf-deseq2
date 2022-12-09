@@ -1076,6 +1076,8 @@ process string {
         print(f"Done with cytoscape for {fin}.")
     with open("/workdir/deseq2_output/annotated/cytoscape.completed.txt", "w") as f:
       f.write("cytoscape completed")
+
+    os.rename("/workdir/${cytoscape_host}_inuse","/workdir/${cytoscape_host}")
   """
 }
 
@@ -1085,6 +1087,9 @@ process release_ip {
 
   input:
     path cytoscape_host
+
+  when:
+    ( file("${params.project_folder}/deseq2_output/annotated/cytoscape.completed.txt").exists() ) 
   
   script:
   """
@@ -1236,7 +1241,7 @@ workflow string_cytoscape {
         printf "${params.cytoscape_host} will be renamed to ${params.cytoscape_host}_inuse"
         get_ip("${params.cytoscape_host}")
         string(get_ip.out.collect())
-        release_ip(string.out.collect()) 
+        release_ip(get_ip.out.collect()) 
     }
   }
 
