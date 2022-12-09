@@ -845,9 +845,8 @@ process get_ip {
   script:
   """
     #!/bin/bash
-    echo "waiting for cytoscape to be available"
-    ls -lrth ${cytoscape_host}
     while [[ ! -f ${cytoscape_host} ]] ; do 
+      echo "waiting for cytoscape to be available"
       sleep 3\$((RANDOM % 9))
     done
     mv ${cytoscape_host} ${cytoscape_host}_inuse 
@@ -1096,7 +1095,7 @@ process release_ip {
   script:
   """
     #!/bin/bash
-    mv /workdir/${cytoscape_host}_inuse /workdir/${cytoscape_host} 
+    mv ${cytoscape_host}_inuse ${cytoscape_host} 
   """
 
 }
