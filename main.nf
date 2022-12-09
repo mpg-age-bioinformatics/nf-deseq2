@@ -838,6 +838,9 @@ process get_ip {
 
   output:
     path cytoscape_host
+
+  when:
+    ( ! file("${params.project_folder}/deseq2_output/annotated/cytoscape.completed.txt").exists() )
   
   script:
   """
@@ -1241,7 +1244,7 @@ workflow string_cytoscape {
         printf "${params.cytoscape_host} will be renamed to ${params.cytoscape_host}_inuse"
         get_ip("${params.cytoscape_host}")
         string(get_ip.out.collect())
-        release_ip(get_ip.out.collect()) 
+        release_ip(string.out.collect()) 
     }
   }
 
