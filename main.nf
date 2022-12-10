@@ -1202,8 +1202,10 @@ workflow annotate {
 workflow david {
   if ( 'DAVIDUSER' in params.keySet() ) {
     if ( "${params.DAVIDUSER}" != "None" ) {
-  // data = channel.fromPath( "${params.project_folder}/deseq2_output/annotated/*.results.tsv" )
-  david_proc() 
+      // data = channel.fromPath( "${params.project_folder}/deseq2_output/annotated/*.results.tsv" )
+      david_proc() 
+    }
+  }
 }
 
 workflow topgo {
