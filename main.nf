@@ -140,7 +140,7 @@ process parse_submission {
     from biomart import BiomartServer
     import itertools
     import AGEpy as age
-    sfile="/workdir/${samplestable}"
+    sfile="/samples.xlsx"
     sdf=pd.read_excel(sfile)
     sam_df=sdf.copy()
     files_col=sam_df.columns.tolist()[0]
@@ -1200,6 +1200,8 @@ workflow annotate {
 } 
 
 workflow david {
+  if ( 'DAVIDUSER' in params.keySet() ) {
+    if ( "${params.DAVIDUSER}" != "None" ) {
   // data = channel.fromPath( "${params.project_folder}/deseq2_output/annotated/*.results.tsv" )
   david_proc() 
 }
