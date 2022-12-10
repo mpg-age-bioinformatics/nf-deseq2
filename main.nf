@@ -884,7 +884,7 @@ process string {
     import matplotlib.pyplot as plt
     import tempfile
     ################# in values ################################
-    with open("${cytoscape_host}_inuse" , "r") as hostfile:
+    with open("/cytoscape.ip.txt" , "r") as hostfile:
       host=hostfile.readlines()[0].split("\\n")[0]
     species="${params.species}"
     biomarthost="${params.biomart_host}"
@@ -1077,8 +1077,6 @@ process string {
         print(f"Done with cytoscape for {fin}.")
     with open("/workdir/deseq2_output/annotated/cytoscape.completed.txt", "w") as f:
       f.write("cytoscape completed")
-
-    os.rename("${cytoscape_host}_inuse","${cytoscape_host}")
   """
 }
 
