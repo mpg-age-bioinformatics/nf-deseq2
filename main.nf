@@ -1093,8 +1093,7 @@ process release_ip {
   script:
   """
     #!/bin/bash
-    echo "${cytoscape_host}"
-    if [[ -f ${cytoscape_host}_inuse ]] ; then mv ${cytoscape_host}_inuse ${cytoscape_host} ; fi
+    if [[ -f ${params.cytoscape_host}_inuse ]] ; then mv ${params.cytoscape_host}_inuse ${params.cytoscape_host} ; fi
   """
 
 }
