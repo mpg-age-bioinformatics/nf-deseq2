@@ -140,7 +140,11 @@ process parse_submission {
     from biomart import BiomartServer
     import itertools
     import AGEpy as age
-    sfile="/samples.xlsx"
+    import os
+    if os.path.exists("/samples.xlsx"):
+      sfile="/samples.xlsx"
+    else:
+      sfile="/workdir/${samplestable}"
     sdf=pd.read_excel(sfile)
     sam_df=sdf.copy()
     files_col=sam_df.columns.tolist()[0]
@@ -1171,10 +1175,11 @@ workflow preprocess {
   }
 
   if ( 'samplestable' in params.keySet() ) {
-    samplestable=${params.samplestable}
+    samplestable="${params.samplestable}"
   } else {
     samplestable="sample_sheet.xlsx"
   }
+
   parse_submission(samplestable) 
 
 }
