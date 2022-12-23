@@ -128,7 +128,7 @@ process parse_submission {
   stageOutMode 'move'
 
   input:
-    val samplestable
+    path samplestable
 
   when:
     ( ! file("${params.project_folder}/deseq2_output/models.txt").exists() ) 
@@ -1174,13 +1174,13 @@ workflow preprocess {
     annotations(gtf)
   }
 
-  if ( 'samplestable' in params.keySet() ) {
-    samplestable="${params.samplestable}"
+  if ( 'deseq2_samplestable' in params.keySet() ) {
+    deseq2_samplestable="${params.deseq2_samplestable}"
   } else {
-    samplestable="sample_sheet.xlsx"
+    deseq2_samplestable="sample_sheet.xlsx"
   }
 
-  parse_submission(samplestable) 
+  parse_submission(deseq2_samplestable) 
 
 }
 
