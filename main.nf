@@ -1174,13 +1174,13 @@ workflow preprocess {
     annotations(gtf)
   }
 
-  if ( 'deseq2_samplestable' in params.keySet() ) {
-    deseq2_samplestable="${params.deseq2_samplestable}"
+  if ( 'samplestable' in params.keySet() ) {
+    samplestable="${params.samplestable}"
   } else {
-    deseq2_samplestable="sample_sheet.xlsx"
+    samplestable="sample_sheet.xlsx"
   }
 
-  parse_submission(deseq2_samplestable) 
+  parse_submission(samplestable) 
 
 }
 
