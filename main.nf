@@ -558,11 +558,11 @@ process topgo_proc {
     # host=stringr::str_split("${params.biomart_host}", "/biomart")[[1]][[1]]
     # ensembl = useMart("ensembl",dataset="${params.biomart_dataset}", host=host)
     # goterms = getBM(attributes = c("ensembl_gene_id", 
-                                            "external_gene_name",
-                                            "go_id", "name_1006"),  
-                              filters = 'ensembl_gene_id',
-                              values = Din[, 'ensembl_gene_id'],
-                              mart = ensembl)
+    #                                        "external_gene_name",
+    #                                        "go_id", "name_1006"),  
+    #                          filters = 'ensembl_gene_id',
+    #                          values = Din[, 'ensembl_gene_id'],
+    #                          mart = ensembl)
     goterms<-read.delim("/workdir/deseq2_output/annotated/biotypes_go_raw_topgo.txt", as.is = TRUE)
     ## ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
     geneID2GO = list()
