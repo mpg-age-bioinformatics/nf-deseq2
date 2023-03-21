@@ -96,13 +96,15 @@ process annotations {
     import AGEpy as age
     import pandas as pd
     from biomart import BiomartServer
-    attributes=["ensembl_gene_id","go_id","name_1006"]
+    attributes=["ensembl_gene_id","external_gene_name","go_id","name_1006"]
     server = BiomartServer( "${params.biomart_host}" )
     organism=server.datasets["${params.biomart_dataset}"]
     response=organism.search({"attributes":attributes})
     response=response.content.decode().split("\\n")
     response=[s.split("\\t") for s in response ]
     bio_go=pd.DataFrame(response,columns=attributes)
+    bio_go.to_csv("/workdir/deseq2_output/annotated/biotypes_go_raw_topgo.txt", index=None, sep="\t")
+    bio_go=bio_go[["ensembl_gene_id","go_id","name_1006"]]
     bio_go.to_csv("/workdir/deseq2_output/annotated/biotypes_go_raw.txt", index=None, sep="\t")
     bio_go.columns = ["ensembl_gene_id","GO_id","GO_term"]
     def CombineAnn(df):
@@ -561,7 +563,7 @@ process topgo_proc {
                               filters = 'ensembl_gene_id',
                               values = Din[, 'ensembl_gene_id'],
                               mart = ensembl)
-    goterms<-read.delim("/workdir/deseq2_output/annotated/biotypes_go_raw.txt", as.is = TRUE)
+    goterms<-read.delim("/workdir/deseq2_output/annotated/biotypes_go_raw_topgo.txt", as.is = TRUE)
     ## ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
     geneID2GO = list()
     for(i in 1:nrow(goterms)){
