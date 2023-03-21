@@ -553,14 +553,15 @@ process topgo_proc {
     # This part if you are working in R version 4 or higher
     # biomartCacheClear()
     # ensembl <- useEnsembl(biomart = "genes", dataset = "${params.biomart_dataset}", host="${params.biomart_host}")
-    host=stringr::str_split("${params.biomart_host}", "/biomart")[[1]][[1]]
-    ensembl = useMart("ensembl",dataset="${params.biomart_dataset}", host=host)
-    goterms = getBM(attributes = c("ensembl_gene_id", 
+    # host=stringr::str_split("${params.biomart_host}", "/biomart")[[1]][[1]]
+    # ensembl = useMart("ensembl",dataset="${params.biomart_dataset}", host=host)
+    # goterms = getBM(attributes = c("ensembl_gene_id", 
                                             "external_gene_name",
                                             "go_id", "name_1006"),  
                               filters = 'ensembl_gene_id',
                               values = Din[, 'ensembl_gene_id'],
                               mart = ensembl)
+    goterms<-read.delim("/workdir/deseq2_output/annotated/biotypes_go_raw.txt", as.is = TRUE)
     ## ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
     geneID2GO = list()
     for(i in 1:nrow(goterms)){
