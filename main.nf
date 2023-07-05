@@ -549,6 +549,10 @@ process topgo_proc {
     # make geneList input for topGO
     sigGenes = subset(Din, padj <= 0.05)[, 'ensembl_gene_id']
     geneList = factor(as.integer(Din[,'ensembl_gene_id'] %in% sigGenes))
+    
+    #pipeline only go through when there is significant genes
+    if ( length(levels(geneList)) > 1) {
+
     names(geneList) = Din[,'ensembl_gene_id']
     results = list(genes = subset(Din, padj <= 0.05))
     ## ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -637,6 +641,7 @@ process topgo_proc {
     # rbind and save as tsv
     results.tab = do.call(rbind, results[2:4])
     write.table(results.tab, gsub("results.tsv","topGO.tsv", fin), row.names = FALSE, sep = '\\t', quote = FALSE)
+  }
   """
 }
 
