@@ -1137,7 +1137,7 @@ process upload_paths {
     fi
 
     if [[ \$(ls  | grep topGO) ]] ; then
-      for f in \$(ls *.topGO.* ) ; do echo "togo \$(readlink -f \${f})" >>  upload.txt_ ; done
+      for f in \$(ls *.topGO.* ) ; do echo "topgo \$(readlink -f \${f})" >>  upload.txt_ ; done
     fi
 
     uniq upload.txt_ upload.txt 
