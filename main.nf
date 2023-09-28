@@ -1073,7 +1073,7 @@ process string {
             cytoscape.view.export(options="PDF",outputFile=neig_pdf)
         ssh = paramiko.SSHClient()
         ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
-        ssh.connect(host, username="bioinf")
+        ssh.connect(host, username="flaski")
         ftp_client=ssh.open_sftp()
         for f, extension, local in zip([cys,cyjs,main_png,main_pdf,edg_png,edg_pdf,neig_png,neig_pdf],\
                                         [".cys",".cyjs",".png",".pdf",".png",".pdf",".png",".pdf" ],\
