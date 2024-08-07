@@ -9,7 +9,7 @@ process get_images {
   script:
     """
 
-    if [[ "${params.run_type}" == "r2d2" ]] || [[ "${params.run_type}" == "raven" ]] ; 
+    if [[ "${params.run_type}" == "studio" ]] || [[ "${params.run_type}" == "raven" ]] ; 
 
       then
 
@@ -45,7 +45,7 @@ process get_images {
 
       then
 
-        docker pull mpgagebioinformatics/rnaseq.python:3.8-2
+        docker pull mpgagebioinformatics/rnaseq.python:3.8-3
         docker pull mpgagebioinformatics/deseq2:1.38.0
         docker pull mpgagebioinformatics/topgo:2.50.0
         docker pull mpgagebioinformatics/cellplot:ea2dbc4
