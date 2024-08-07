@@ -15,9 +15,9 @@ process get_images {
 
         cd ${params.image_folder}
 
-        if [[ ! -f rnaseq.python-3.8-2.sif ]] ;
+        if [[ ! -f rnaseq.python-3.8-3.sif ]] ;
           then
-            singularity pull rnaseq.python-3.8-2.sif docker://index.docker.io/mpgagebioinformatics/rnaseq.python:3.8-2
+            singularity pull rnaseq.python-3.8-3.sif docker://index.docker.io/mpgagebioinformatics/rnaseq.python:3.8-3
         fi
 
         if [[ ! -f deseq2-1.38.0.sif ]] ;
