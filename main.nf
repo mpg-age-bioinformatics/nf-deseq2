@@ -713,6 +713,22 @@ process cellplot {
     D\$ease <- as.numeric(as.character(D\$ease))
     D\$foldEnrichment <- as.numeric(as.character(D\$foldEnrichment))
     D\$listHits <- as.numeric(as.character(D\$listHits))
+
+    # Added for handling cellplot NA values
+    # Handle log2fc properly
+    D\$log2fc <- gsub("inf", "Inf", as.character(D\$log2fc))
+    D\$log2fc <- as.numeric(D\$log2fc)
+
+    # Remove rows where `ease`, `foldEnrichment`, or `log2fc` are NA
+    D <- D[!is.na(D\$ease) & !is.na(D\$foldEnrichment) & !is.na(D\$log2fc), ]
+
+    # If no valid data remains, exit
+    if (nrow(D) == 0) {
+        message("No valid data available for plotting.")
+        quit(save="no")
+    }
+    # End of addition for handling cellplot NA values
+
     D <- D[order(D\$ease),]
 
     # subset to number of rows to plot..if specified number is larger than number of rows.
