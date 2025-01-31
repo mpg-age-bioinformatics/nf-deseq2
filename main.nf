@@ -394,7 +394,7 @@ process mastertable {
     # calculate fpkm values
     fpkm.deseq = as.data.frame(fpkm(dds))
     names(fpkm.deseq) = paste0('fpkm.', names(fpkm.deseq))
-    res_counts = merge(res_counts, fpkm.deseq, by = 'row.names', all.x = TRUE)
+    res_counts = merge(res_counts, fpkm.deseq, by = 'row.names', all = TRUE)
     res_counts = res_counts[,-1]
     write.table(res_counts, "/workdir/deseq2_output/all_results_stats.tsv", sep = "\\t", quote = F, row.names = F)
     openxlsx::write.xlsx(res_counts, "/workdir/deseq2_output/all_results_stats.xlsx", row.names = FALSE, col.names = TRUE)
