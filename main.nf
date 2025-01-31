@@ -378,6 +378,7 @@ process mastertable {
     res.counts <- counts(dds, normalized=TRUE)
     res_counts <- as.data.frame(res.counts)
     openxlsx::write.xlsx(res_counts, "/workdir/deseq2_output/all_res_counts.xlsx", row.names = TRUE, col.names = TRUE)
+    write.table(res_counts, "/workdir/deseq2_output/all_res_counts.tsv", sep = "\\t", quote = T, row.names = T)
     result_tables <- list.files('/workdir/deseq2_output/', pattern = '.results.tsv')
     for(f in result_tables){
       tmp <- read.delim(paste0('/workdir/deseq2_output/', f))
