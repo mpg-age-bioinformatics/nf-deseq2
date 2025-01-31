@@ -384,7 +384,7 @@ process mastertable {
       tmp <- read.delim(paste0('/workdir/deseq2_output/', f))
       tmp <- tmp[,c('log2FoldChange', 'pvalue', 'padj')]
       names(tmp) <- paste(names(tmp), gsub('.results.tsv', '', gsub('Group_', '', f)), sep = '.')
-      res_counts <- merge(res_counts, tmp, by.x = 'row.names', by.y = 'row.names')
+      res_counts <- merge(res_counts, tmp, by.x = 'row.names', by.y = 'row.names', all = TRUE)
       #print(nrow(res_counts))
       names(res_counts)[names(res_counts) == "Row.names"] <- "ensembl_gene_id"
       print(length(res_counts[,'ensembl_gene_id']))
