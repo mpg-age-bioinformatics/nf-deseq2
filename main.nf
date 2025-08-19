@@ -1188,7 +1188,7 @@ workflow preprocess {
   }
 
   if ( 'gtf' in params.keySet() ) {
-    gtf=${params.gtf}
+    gtf="${params.gtf}"
   } else {
     gtf="kallisto_index/${params.organism}.${params.release}.no.rRNA.gtf"
   }
@@ -1220,7 +1220,7 @@ workflow pairwise {
 
 workflow annotate {
   if ( 'gtf' in params.keySet() ) {
-    gtf=${params.gtf}
+    gtf="${params.gtf}"
   } else {
     gtf="kallisto_index/${params.organism}.${params.release}.no.rRNA.gtf"
   }
